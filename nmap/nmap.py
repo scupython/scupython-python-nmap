@@ -227,7 +227,7 @@ class PortScanner(object):
 
 
 
-    def scan(self, hosts='127.0.0.1', ports=None, arguments='-sV'):
+    def scan(self, hosts='127.0.0.1', ports=None, arguments='-sV', sudo=False):
         """
         Scan given hosts
 
@@ -257,6 +257,8 @@ class PortScanner(object):
         
         # Launch scan
         args = [self._nmap_path, '-oX', '-'] + h_args + ['-p', ports]*(ports!=None) + f_args
+        if sudo:
+            args = ['sudo'] + args
 
         p = subprocess.Popen(args, bufsize=100000, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
